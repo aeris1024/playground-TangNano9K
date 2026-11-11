@@ -1,0 +1,6 @@
+name = "002_dual_pll"
+board = "tang_nano_9k"
+top = "top"
+sources = ["rtl/top.sv", "../../common/rtl/audio_pll.sv", "../../common/rtl/clock_channel.sv"]
+constraints = ["constraints/dual_pll.cst", "constraints/dual_pll.sdc"]
+testbench = "sim/tb_top.sv"

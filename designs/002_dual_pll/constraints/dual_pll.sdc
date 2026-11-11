@@ -1,0 +1,6 @@
+create_clock -name sys_clk -period 37.037 [get_ports {sys_clk}]
+create_clock -name pdm_a -period 325.521 [get_ports {pdm_clk_a}]
+create_clock -name pdm_b -period 325.521 [get_ports {pdm_clk_b}]
+create_generated_clock -name audio_a -source [get_ports {pdm_clk_a}] -multiply_by 4 [get_pins {domain_a/clock_source/pll/CLKOUT}]
+create_generated_clock -name audio_b -source [get_ports {pdm_clk_b}] -multiply_by 4 [get_pins {domain_b/clock_source/pll/CLKOUT}]
+set_clock_groups -asynchronous -group [get_clocks {sys_clk}] -group [get_clocks {pdm_a audio_a}] -group [get_clocks {pdm_b audio_b}]

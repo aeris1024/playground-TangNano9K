@@ -49,6 +49,18 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 - `build`: 合成・配置配線を実行し、`build/001_blink/001_blink.fs`を生成します。
 - `program`: ビルド済みの`.fs`をSRAMへ書き込みます。自動ビルドは行いません。
 
+実装済みデザインは次のとおりです。
+
+| デザイン | 内容 | 検証状況 |
+|---|---|---|
+| `001_blink` | LED1の1 Hz点滅 | SRAM／Flashからの起動を実機確認済み |
+| `002_dual_pll` | ピン63/35から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
+| `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、未配線 |
+
+Analog2PDMの詳細は[デザイン説明](designs/003_analog2pdm/README.md)、
+実機接続は[配線・測定手順](docs/analog2pdm_wiring.md)を参照してください。
+ビルドはsetup/hold違反数も確認し、違反がある場合は失敗します。
+
 書き込みは`GW1NR-9C`、operation 2（SRAM Program）を使います。
 FPGA名とIDCODE `0x1100481B`を事前確認し、対象を一意に検出できた場合だけ書き込みます。
 複数の対象基板が接続されている場合は、`doctor`のエラーに表示されるUSB locationを
@@ -196,9 +208,10 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 
 1. 開発基盤と`001_blink`（実装・シミュレーション・ビルド・SRAM書き込み・実機動作確認済み）
    内蔵Flashへの書き込みと、電源再投入後のFlashからの起動も実機確認済みです。
-2. ボタン入力、UART送信
-3. PLL、BSRAM
-4. SPI、I2Cなどの周辺回路実験
+2. `002_dual_pll`（2基同時の配置配線と非同期クロックの機能シミュレーション済み）
+3. `003_analog2pdm`（4chのRTL・数値検証・配置配線済み。ADC／MCHStreamerの配線・録音待ち）
+4. Analog2PDMの実機4ch評価、その後のFlash保存
+5. ボタン入力、UART、SPI、I2Cなどの周辺回路実験
 
 ## 参考資料
 

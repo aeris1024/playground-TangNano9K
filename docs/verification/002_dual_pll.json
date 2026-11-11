@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-11-11T23:50:26.442455+09:00",
+  "design": "002_dual_pll",
+  "board": "tang_nano_9k",
+  "device": "GW1NR-9C",
+  "toolchain": "Gowin Education V1.9.11.03; Icarus Verilog 14.0; Python 3.14.6",
+  "cli_tests": {
+    "passed": 26,
+    "failed": 0
+  },
+  "doctor": "PASS",
+  "functional_simulation": "PASS",
+  "build": "PASS",
+  "timing_violated_endpoints": {
+    "setup": 0,
+    "hold": 0
+  },
+  "resources": {
+    "Logic": {
+      "used": 220,
+      "available": 8640
+    },
+    "Register": {
+      "used": 172,
+      "available": 6693
+    },
+    "rPLL": {
+      "used": 2,
+      "available": 2
+    }
+  },
+  "bitstream": "build/002_dual_pll/002_dual_pll.fs",
+  "bitstream_sha256": "a709f289d0732b76f667ba95f5063521378276d16350421f5178d701900c2a1a",
+  "source_sha256": {
+    "designs/002_dual_pll/design.toml": "559397fbb8ccb843c3288e36f99ad11482b8e4ed53363d6c7b3cc0d26b0e07dc",
+    "designs/002_dual_pll/sim/tb_top.sv": "19493643fef33a101f470763a6b66aa97efad161f28845af4ee8873c746dee9b",
+    "designs/002_dual_pll/rtl/top.sv": "b0e7dd396a357c1da6b87d31701e6d9b0abe0ac46a0dd8c54d201bc391bc21e7",
+    "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
+    "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
+    "designs/002_dual_pll/constraints/dual_pll.cst": "59d004428058b0468549d4a23df964500edd5c6a8eecbd45a098f4a79477889e",
+    "designs/002_dual_pll/constraints/dual_pll.sdc": "3d22c95077ae17d51ef5b74f96dcaf6695a91414278d2fb6a5ef5492d727a9fa"
+  },
+  "hardware_connections": "not_connected",
+  "hardware_programming": "not_performed",
+  "hardware_result": "pending_user_wiring_and_measurement",
+  "flash_programming": "not_performed",
+  "independent_clock_hardware_test": "deferred; one MCHStreamer provides duplicated clocks"
+}

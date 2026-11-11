@@ -1,0 +1,106 @@
+# Analog2PDM 配線・測定手順
+
+この手順は`003_analog2pdm`向けです。現在はADCとMCHStreamerが未配線で、
+ソフトウェアの検証とビットストリーム生成まで完了しています。
+
+## 接続するもの
+
+- Tang Nano 9K
+- Youmile PCM1808基板2枚（Amazon ASIN B09BTLPBM4）
+- PDMファームウェアのMCHStreamer KitまたはLite、48 kHz設定
+- 4ch以上の入力を録音できるASIO対応ソフト、音声信号源
+- クロックとデータ波形を確認できるオシロスコープまたはロジックアナライザー
+
+以下のTang側の番号は**FPGAの物理ピン番号**です。コネクターの何番目かを表す番号ではありません。
+ボード上の番号表示と公式ピン図で対応を確認してください。
+信号はすべて3.3 Vで、1.8 Vバンクのヘッダーピンは使いません。
+
+## 電源とモード設定
+
+両方のUSB電源を切って配線します。ADCは1枚ずつ確認してから2枚接続します。
+
+| Tang Nano 9K | PCM1808 A/B |
+|---|---|
+| 5 V（公式回路図 J6-22） | 各基板の5V |
+| 3.3 V（J6-24） | 各基板の3.3V |
+| GND（J6-23など） | 各基板のGND |
+
+PCM1808基板にはアナログ5 Vとデジタル3.3 Vを両方供給します。
+`MD0`、`MD1`、`FMY/FMT`はLow（GND）に設定します。
+`FMY`表記の端子は、実物でPCM1808のFMT端子に接続されていることを確認してください。
+MCHStreamerとはGNDを共通にし、MCHStreamer J3-2の3.3 V出力はTangの電源へ接続しません。
+
+## ADC信号
+
+| Tang信号 | Aの物理ピン | Bの物理ピン | PCM1808側 | 方向 |
+|---|---:|---:|---|---|
+| ADC MCLK | 25 | 29 | SCK（SCKI） | FPGA→ADC |
+| ADC BCLK | 26 | 30 | BCK | FPGA→ADC |
+| ADC LRCLK | 27 | 33 | LRC（LRCK） | FPGA→ADC |
+| ADC DATA | 28 | 34 | OUT（DOUT） | ADC→FPGA |
+
+アナログのL/Rは各基板のLIN/RIN、信号源のGNDは基板のアナログ入力側GNDへ接続します。
+基板の入力回路に合わせたライン信号を使います。マイク用プリアンプはこの設計に含みません。
+
+## MCHStreamer信号
+
+| MCHStreamer J3 | Tang Nano 9K | 方向 |
+|---|---|---|
+| 11: PDM CLK | 63: PDM_CLK A | MCH→FPGA |
+| 12: PDM CLK2 | 35: PDM_CLK B | MCH→FPGA |
+| 3: PDM 1-2 | 41: PDM_DATA A | FPGA→MCH |
+| 4: PDM 3-4 | 42: PDM_DATA B | FPGA→MCH |
+| 1: GND | GND | 共通 |
+
+J3は2 mmピッチです。向きとpin 1を確認し、信号線は短くしてください。
+PDMはLを立ち下がり、Rを立ち上がりで取り込みます。
+
+## 初回の確認
+
+1. ADCの電源端子とモード設定を実物で確認します。2枚とも、端子・部品実装とクロック／データ波形を個別に確認します。
+2. MCHStreamerをPDMファームウェア・48 kHzに設定し、J3-11/12に3.072 MHzが出ていることを確認します。
+3. ADC Aの信号線から接続し、次を順に実行します。
+
+```powershell
+.\fpga.ps1 doctor
+.\fpga.ps1 sim 003_analog2pdm
+.\fpga.ps1 build 003_analog2pdm
+.\fpga.ps1 program 003_analog2pdm
+```
+
+4. LED1（A LOCK）、LED2（A処理開始）が点灯し、LED3（A異常）が消灯していることを確認します。起動待ちは250 msです。Bにクロックを接続していればBの状態LEDも動作します。
+5. ADC A側でMCLK=12.288 MHz、BCLK=3.072 MHz、LRCLK=48 kHz、DOUTを確認します。MCLKのデューティ、LRCLKのsetup/hold、PDMの両取り込みエッジ前後の余裕も測定します。
+6. Lだけに1 kHzを入力してUSB ch1、Rだけに入力してch2へ現れることを確認します。
+7. 電源を切ってADC Bを接続し、同様にBのL→ch3、R→ch4を確認します。
+8. 4ch同時録音を行い、左右の分離、異常LEDの消灯、連続動作を確認します。
+9. 各系統のクロック線だけを外した場合に、その系統が停止し、他方の録音が続くことを確認します。復帰後は再度250 ms以上待って確認します。
+
+片系の配線を省略するときは、そのADC DATA入力をGNDへ固定して浮かせないでください。
+Flashにはまだ書き込まず、まずSRAMで検証します。
+
+## 音質と独立性の記録
+
+ADC A/L、A/R、B/L、B/Rへ同じ基準レベルを順に入力し、24 bit・48 kHzの録音を保存します。
+20 Hz、1 kHz、20 kHzの振幅と、1 kHz時のTHD+Nを測定します。
+THD+Nの帯域は20 Hz〜20 kHz、非重み付け、DC除外とし、入力レベルも記録します。
+FPGAの既定利得は−6.0206 dBです。ADC基板のアナログ利得とMCHStreamerのデシメーション応答は別に評価します。
+
+数値モデルの±0.5 dB／−65 dBはFPGA変換部の基準です。
+ADC基板・電源・配線・MCHStreamerを含む実測値を、モデルの結果に置き換えて報告しないでください。
+特にADC基板だけの周波数応答を先に確認し、アナログ入力回路の問題を切り分けます。
+
+MCHStreamer 1台のCLKとCLK2は同じクロックなので、独立周波数の実機試験は未確認として残します。
+独自デバイスや2台目の受信機を用意した後、A/Bの周波数を別々にして確認します。
+
+4ch録音を確認できた後に限り、必要に応じて次のコマンドでFlashへ保存します。
+
+```powershell
+.\fpga.ps1 program 003_analog2pdm --flash
+```
+
+## 参考資料
+
+- [PCM1808データシート](https://www.ti.com/lit/ds/symlink/pcm1808.pdf)
+- [MCHStreamer User Manual（PDM設定とJ3配線）](https://www.minidsp.com/images/documents/MCHStreamer%20User%20Manual.pdf)
+- [Tang Nano 9K公式回路図](https://dl.sipeed.com/fileList/TANG/Nano%209K/2_Schematic/Tang_Nano_9k_3672_Schematic.pdf)
+- [対象PCM1808基板](https://www.amazon.co.jp/dp/B09BTLPBM4)

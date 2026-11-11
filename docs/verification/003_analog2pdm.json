@@ -1,0 +1,163 @@
+{
+  "recorded_at": "2026-11-11T23:55:00.574479+09:00",
+  "design": "003_analog2pdm",
+  "board": "tang_nano_9k",
+  "device": "GW1NR-9C",
+  "toolchain": "Gowin Education V1.9.11.03; Icarus Verilog 14.0; Python 3.14.6",
+  "cli_tests": {
+    "passed": 26,
+    "failed": 0
+  },
+  "doctor": "PASS",
+  "functional_simulation": "PASS",
+  "build": "PASS",
+  "timing_violated_endpoints": {
+    "setup": 0,
+    "hold": 0
+  },
+  "resources": {
+    "Logic": {
+      "used": 5245,
+      "available": 8640
+    },
+    "Register": {
+      "used": 3084,
+      "available": 6693
+    },
+    "BSRAM": {
+      "used": 12,
+      "available": 26
+    },
+    "DSP": {
+      "used": 10,
+      "available": 10
+    },
+    "rPLL": {
+      "used": 2,
+      "available": 2
+    }
+  },
+  "bitstream": "build/003_analog2pdm/003_analog2pdm.fs",
+  "bitstream_sha256": "15cdaa967669ad4c9cf634d81da41e0f47a47f474e17e92421bdd60a7453705f",
+  "source_sha256": {
+    "designs/003_analog2pdm/design.toml": "363957ca90d23fc878915a79a11ef2b0916712fec87a1f08042df9196e061314",
+    "designs/003_analog2pdm/sim/tb_top.sv": "e0cfa45acdcb5e3ad096a613fd73242a09f7059d60e623846319aaa220ef9725",
+    "designs/003_analog2pdm/rtl/top.sv": "ffec1e6cca396f3bc3e3da9434ad078c1a834ee4550111df57f4e9b2cf8901a3",
+    "designs/003_analog2pdm/rtl/audio_port.sv": "e87dc009c1f5018ae9cce40a3c1390453d0148f3986fa916a9e4d2fe3aa0c000",
+    "designs/003_analog2pdm/rtl/i2s_receive.sv": "18944921b3bda1949389efb616e25b6e6072f0fdb4b84d3cb27c67ac581b84db",
+    "designs/003_analog2pdm/rtl/halfband_stereo.sv": "6befc10a1d7f9c2d331e5f87aeb4914785aae53bf6ac9ca24fd83ab11e945940",
+    "designs/003_analog2pdm/rtl/halfband_coeff.sv": "ddc193dc576b7b3292028422a4fdd35061f7900f9d8c1a2687600a86a2467fb7",
+    "designs/003_analog2pdm/rtl/stereo_fifo.sv": "fd05ea05a3c488c9d9ee23b5fce1da7fd26e912643b35b6f7bb674af806520d5",
+    "designs/003_analog2pdm/rtl/cic_sigma.sv": "6fd3c7e942cb727ac118dfa2c7e09ca7eb6d8f8b3a1d5549a17bd1a9c83f529a",
+    "designs/003_analog2pdm/rtl/pdm_backend.sv": "d0633f983a4a3e598e04a0d7b39923d92dd984edc5eaa8467ef312704ee192cc",
+    "designs/003_analog2pdm/rtl/pdm_ddr.sv": "f038608dbbb71ffd24b7d295ae5f29929910c1d7720795bdad09f4135ff10b41",
+    "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
+    "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
+    "designs/003_analog2pdm/constraints/analog2pdm.cst": "5271dade2db921a1c2735c9a749d6af78a4fe83bf14df2b9a9c22e40308a4e24",
+    "designs/003_analog2pdm/constraints/analog2pdm.sdc": "c6ffca417be33861d50496ca5713096b254f421a266a4d3a8f976bb227ddaecc",
+    "designs/003_analog2pdm/model/generate_coefficients.py": "ebfa8d659945784de98a81a4e9e6ebdfd0e30ce76947d777e2afb6fbeae72cbb",
+    "designs/003_analog2pdm/model/coefficients.json": "62b88fb92606e967a5305f8d69adad031e322f328d6ab7fe479185a35cce2be1",
+    "designs/003_analog2pdm/model/verify_audio.py": "0544eac2573d460d3843e57bc9c729a90439c760293e91816def01fb7a265ed1"
+  },
+  "hardware_connections": "not_connected",
+  "hardware_programming": "not_performed",
+  "hardware_result": "pending_user_wiring_and_measurement",
+  "flash_programming": "not_performed",
+  "independent_clock_hardware_test": "deferred; one MCHStreamer provides duplicated clocks",
+  "audio_model": {
+    "passband_20hz_20khz": {
+      "min_db": -0.11269620368239572,
+      "max_db": 0.0006425751218488578
+    },
+    "bit_exact_model_response": [
+      {
+        "hz": 20,
+        "output_amplitude_dbfs": -12.020602691291247,
+        "relative_db": 0.0006201049217917642
+      },
+      {
+        "hz": 1000,
+        "output_amplitude_dbfs": -12.021222796213038,
+        "relative_db": 0.0
+      },
+      {
+        "hz": 20000,
+        "output_amplitude_dbfs": -12.125017198712111,
+        "relative_db": -0.1037944024990729
+      }
+    ],
+    "stress": {
+      "silence": {
+        "faults": 0,
+        "settled_density": 0.5
+      },
+      "positive_full_scale": {
+        "faults": 0,
+        "settled_density": 0.75
+      },
+      "negative_full_scale": {
+        "faults": 0,
+        "settled_density": 0.25
+      },
+      "full_scale_step": {
+        "faults": 0,
+        "settled_density": 0.5
+      },
+      "impulse": {
+        "faults": 0,
+        "settled_density": 0.5
+      }
+    },
+    "tone_hz": 1000,
+    "input_dbfs": -6,
+    "gain_db": -6.020599913279624,
+    "measurement_band_hz": [
+      20,
+      20000
+    ],
+    "channels": [
+      {
+        "channel": "A_L",
+        "thdn_db": -70.14737262396532,
+        "output_amplitude_dbfs": -12.021222832781383,
+        "faults": 0
+      },
+      {
+        "channel": "A_R",
+        "thdn_db": -69.69977236241064,
+        "output_amplitude_dbfs": -12.021223278425296,
+        "faults": 0
+      },
+      {
+        "channel": "B_L",
+        "thdn_db": -70.13038617671482,
+        "output_amplitude_dbfs": -12.021221687167731,
+        "faults": 0
+      },
+      {
+        "channel": "B_R",
+        "thdn_db": -70.04428275841823,
+        "output_amplitude_dbfs": -12.02122119830742,
+        "faults": 0
+      }
+    ],
+    "status": "PASS"
+  },
+  "rtl_bit_exact": {
+    "fir_stages": 3,
+    "stereo_frames_per_stage": 192,
+    "i2s_stereo_frames": 192,
+    "cic_sigma_bits": 1536,
+    "status": "PASS"
+  },
+  "timing_exceptions": "Asynchronous clock groups for A/B/27MHz supervision; first-stage FIFO Gray-pointer D pins only within each audio/reference pair",
+  "remaining_warnings": [
+    "PR1014: pin 63 reference clock uses a generic ingress route to the global clock tree"
+  ],
+  "io_assumptions": {
+    "pdm_receiver_setup_ns": 20,
+    "pdm_receiver_hold_ns": 0,
+    "adc_data_min_ns": -10,
+    "adc_data_max_ns": 50
+  }
+}

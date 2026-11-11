@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import html
 import os
 import locale
 from pathlib import Path
@@ -607,6 +608,11 @@ def command_build(args: argparse.Namespace) -> int:
     if _run([str(gowin), str(script)], output_dir, log, timeout=600) != 0:
         raise FpgaError(f"Gowin build failed; see {log}")
 
+    reports = list(generated_project.rglob("*_tr_content.html"))
+    if len(reports) != 1:
+        raise FpgaError(f"Expected one Gowin timing report, found {len(reports)}; see {log}")
+    validate_timing_report(reports[0])
+
     stable_bitstream = output_dir / f"{design.name}.fs"
     candidates = list(generated_project.rglob("*.fs"))
     if not candidates:
@@ -621,6 +627,21 @@ def command_build(args: argparse.Namespace) -> int:
     print(f"BITSTREAM\t{stable_bitstream}")
     print(f"BUILD LOG\t{log}")
     return 0
+
+
+def validate_timing_report(path: Path) -> dict[str, int]:
+    """Do not publish a stable bitstream when PnR exits zero with timing failures."""
+    content = html.unescape(re.sub(r"<[^>]+>", " ", path.read_text(encoding="utf-8")))
+    counts: dict[str, int] = {}
+    for kind in ("Setup", "Hold"):
+        match = re.search(r"Numbers of " + kind + r" Violated Endpoints\s+(\d+)", content)
+        if not match:
+            raise FpgaError(f"Could not read {kind.lower()} violation count from {path}")
+        counts[kind.lower()] = int(match.group(1))
+    if any(counts.values()):
+        raise FpgaError(f"Timing failed: setup={counts['setup']}, hold={counts['hold']}; see {path}")
+    print("TIMING\tPASS\tsetup=0 hold=0")
+    return counts
 
 
 def command_program(args: argparse.Namespace) -> int:

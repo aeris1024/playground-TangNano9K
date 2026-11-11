@@ -1,4 +1,8 @@
 # Shared components
 
-Place RTL here only after at least two designs need it. The first blink sample
-is self-contained under `designs/001_blink`.
+`rtl/audio_pll.sv` and `rtl/clock_channel.sv` are shared by `002_dual_pll` and
+`003_analog2pdm`. They provide independent x4 PLLs, input-clock monitoring,
+synchronized reset release and ADC startup delay. The Icarus PLL model is
+functional only; physical routing and timing must be checked with Gowin.
+
+Keep audio DSP local to `003_analog2pdm` until a second design uses it.

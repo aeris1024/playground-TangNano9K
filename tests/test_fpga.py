@@ -53,9 +53,31 @@ class FpgaCliTests(unittest.TestCase):
         designs = fpga.discover_designs(MODULE_PATH.parents[1])
         self.assertEqual(
             set(designs),
-            {"001_blink"},
+            {"001_blink", "002_dual_pll", "003_analog2pdm"},
         )
         self.assertEqual(designs["001_blink"].top, "top")
+
+    def test_timing_report_accepts_zero_violations(self) -> None:
+        with tempfile.TemporaryDirectory(dir=MODULE_PATH.parents[1] / "build") as directory:
+            path = Path(directory) / "timing.html"
+            path.write_text("<td>Numbers of Setup Violated Endpoints</td><td>0</td>"
+                            "<td>Numbers of Hold Violated Endpoints</td><td>0</td>", encoding="utf-8")
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(fpga.validate_timing_report(path), {"setup": 0, "hold": 0})
+
+    def test_timing_report_rejects_violations_even_if_tool_succeeded(self) -> None:
+        with tempfile.TemporaryDirectory(dir=MODULE_PATH.parents[1] / "build") as directory:
+            path = Path(directory) / "timing.html"
+            path.write_text("Numbers of Setup Violated Endpoints 0\nNumbers of Hold Violated Endpoints 6", encoding="utf-8")
+            with self.assertRaisesRegex(fpga.FpgaError, "Timing failed"):
+                fpga.validate_timing_report(path)
+
+    def test_unrecognized_timing_report_is_not_treated_as_success(self) -> None:
+        with tempfile.TemporaryDirectory(dir=MODULE_PATH.parents[1] / "build") as directory:
+            path = Path(directory) / "timing.html"
+            path.write_text("Timing report is unavailable", encoding="utf-8")
+            with self.assertRaisesRegex(fpga.FpgaError, "Could not read"):
+                fpga.validate_timing_report(path)
 
     def test_unknown_manifest_key_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory(dir=MODULE_PATH.parents[1] / "build") as directory:
