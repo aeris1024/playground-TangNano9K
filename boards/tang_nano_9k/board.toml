@@ -1,0 +1,14 @@
+name = "tang_nano_9k"
+device = "GW1NR-LV9QN88PC6/I5"
+device_version = "C"
+clock_hz = 27000000
+programmer_device = "GW1NR-9C"
+programmer_idcode = "0x1100481B"
+programmer_flash_operation = 5
+programmer_cable = "USB Debugger A"
+programmer_cable_index = 4
+use_sspi_as_gpio = false
+use_i2c_as_gpio = false
+use_cpu_as_gpio = false
+use_ready_as_gpio = false
+use_done_as_gpio = false

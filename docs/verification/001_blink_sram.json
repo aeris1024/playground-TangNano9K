@@ -1,0 +1,30 @@
+{
+  "verified_at": "2026-11-11T22:40:44.212341+09:00",
+  "board": "tang_nano_9k",
+  "device": "GW1NR-9C",
+  "idcode": "0x1100481B",
+  "usb_location": "201745",
+  "cli_tests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "doctor": "PASS",
+  "simulation": "PASS",
+  "build": "PASS",
+  "timing": {
+    "clock_mhz": 27,
+    "fmax_mhz": 131.775,
+    "setup_violated_endpoints": 0,
+    "hold_violated_endpoints": 0
+  },
+  "programming": {
+    "mode": "SRAM",
+    "operation": 2,
+    "exit_code": 0,
+    "finished": true
+  },
+  "bitstream": "build\\001_blink\\001_blink.fs",
+  "sha256": "9c3c8e8523fec5eb711eed919a7938ca6a2c5a74edd80d39755a368ea19a77d9",
+  "visual_led_confirmation": "confirmed_by_user",
+  "visual_led_observation": "LED1 on for 0.5 seconds and off for 0.5 seconds"
+}

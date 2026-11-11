@@ -1,0 +1,34 @@
+{
+  "verified_at": "2026-11-11T22:51:19.894443+09:00",
+  "board": "tang_nano_9k",
+  "device": "GW1NR-9C",
+  "idcode": "0x1100481B",
+  "usb_location": "201745",
+  "cli_tests": {
+    "passed": 23,
+    "failed": 0
+  },
+  "doctor": "PASS",
+  "simulation": "PASS",
+  "build": "PASS",
+  "timing": {
+    "clock_mhz": 27,
+    "setup_violated_endpoints": 0,
+    "hold_violated_endpoints": 0
+  },
+  "programming": {
+    "mode": "EMBEDDED_FLASH",
+    "operation": 5,
+    "jtag_frequency_mhz": 2.5,
+    "exit_code": 0,
+    "finished": true,
+    "readback_verify_performed": false
+  },
+  "bitstream": "build/001_blink/001_blink.fs",
+  "sha256": "b0fbb25b7d9b8cca7523da76dd326f2d003668ec7dd27c521af02ce96a4fb04a",
+  "program_log": "build/001_blink/program_flash.log",
+  "power_cycle_boot": "confirmed_by_user",
+  "power_cycle_boot_observation": "After cycling power, LED1 turns on for 0.5 seconds and off for 0.5 seconds",
+  "power_cycle_boot_confirmation_source": "user_report",
+  "power_cycle_boot_confirmation_recorded_at": "2026-11-11T22:53:49.151322+09:00"
+}

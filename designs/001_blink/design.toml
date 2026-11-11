@@ -1,0 +1,6 @@
+name = "001_blink"
+board = "tang_nano_9k"
+top = "top"
+sources = ["rtl/top.sv"]
+constraints = ["constraints/blink.cst", "constraints/blink.sdc"]
+testbench = "sim/tb_top.sv"
