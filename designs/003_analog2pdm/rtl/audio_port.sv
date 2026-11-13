@@ -5,7 +5,7 @@ module audio_port #(
 ) (
     input wire sys_clk, reference_clk, adc_data,
     output wire adc_mclk, adc_bclk, adc_lrclk, pdm_data,
-    output wire locked, running, fault
+    output wire locked, running, fault, activity
 );
     wire reference_global;
 `ifdef __ICARUS__
@@ -36,6 +36,8 @@ module audio_port #(
     halfband_stereo #(.STAGE(2), .TAPS(15), .PERIOD(64)) fir3 (
         .clk(adc_mclk), .reset(reset_chain), .in_valid(v2), .in_l(l2), .in_r(r2),
         .out_valid(v3), .out_l(l3), .out_r(r3), .clipped(clip3));
+    audio_meter signal_detector (.clk(adc_mclk), .reset(reset_chain),
+        .sample_valid(v0), .left_sample(l0), .right_sample(r0), .pwm(activity));
     reg overflow;
     wire full, empty, two_available, pop;
     wire [47:0] data;

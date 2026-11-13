@@ -6,3 +6,5 @@ synchronized reset release and ADC startup delay. The Icarus PLL model is
 functional only; physical routing and timing must be checked with Gowin.
 
 Keep audio DSP local to `003_analog2pdm` until a second design uses it.
+
+`rtl/audio_meter.sv`は003/004共用の対数ピーク音量・減衰・1 kHz PWM回路です。

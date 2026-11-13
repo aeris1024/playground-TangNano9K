@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-14T03:41:04.122064+09:00",
+  "recorded_at": "2026-11-14T05:04:07.192193+09:00",
   "design": "004_pdm_tone",
   "doctor": "PASS; GW1NR-9C ID=0x1100481B USB=201745",
   "cli_tests": {
@@ -17,8 +17,8 @@
     "hold": 0
   },
   "bitstream": "build/004_pdm_tone/004_pdm_tone.fs",
-  "sram_programming": "PASS; operation 2; exit code 0 and Finished.",
-  "hardware_audio_observation": "User measured internal tones through MCHStreamer ASIO at 48 kHz. Severe low-cutoff attenuation from ADC-path test not reproduced; residual 20 kHz attenuation remains.",
+  "sram_programming": "LED revision not programmed or observed on hardware; prior observations retained separately",
+  "hardware_audio_observation": "LED revision not programmed or observed on hardware; prior observations retained separately",
   "flash_programming": "not performed",
   "frequencies_hz": [
     100,
@@ -35,11 +35,11 @@
   "ideal_rms_dbfs": -27.03089987,
   "resources": {
     "Logic": {
-      "used": 5418,
+      "used": 6168,
       "available": 8640
     },
     "Register": {
-      "used": 2966,
+      "used": 3046,
       "available": 6693
     },
     "BSRAM": {
@@ -59,12 +59,12 @@
     "PR1014: generic clock routing on PDM reference A/B",
     "EX3791: bounded arithmetic/zero extension narrowed to 24/9 bits in tone generator; PCM values checked by simulation"
   ],
-  "bitstream_sha256": "42afbd56e9faa31c1d206f0d786acb05b65387a77a2245255e6d6b0d729b895c",
+  "bitstream_sha256": "4beafc4562f0afa2c8c2b7c69e81418e833c341542903ea584b180aaed5abf25",
   "source_sha256": {
-    "designs/004_pdm_tone/design.toml": "80a434ec50ce60db1248b8a58c42af1fbc2dcaeb37f0f9673eb5a90f728a3eb5",
-    "designs/004_pdm_tone/sim/tb_top.sv": "05b626474a16fdc54e608079d3278f40f4a02a4c7fadab0efbb75d0f8ad005fc",
-    "designs/004_pdm_tone/rtl/top.sv": "ffec1e6cca396f3bc3e3da9434ad078c1a834ee4550111df57f4e9b2cf8901a3",
-    "designs/004_pdm_tone/rtl/audio_port.sv": "e87dc009c1f5018ae9cce40a3c1390453d0148f3986fa916a9e4d2fe3aa0c000",
+    "designs/004_pdm_tone/design.toml": "31eae6a9a2a3b4e5fb338ac3fef697272747ce292b7870b1d14c03460e54b084",
+    "designs/004_pdm_tone/sim/tb_top.sv": "b480dba244d614f7aa87caac8a142c95a166f7ad31fcff00f2247ff75ca6d005",
+    "designs/004_pdm_tone/rtl/top.sv": "bb804e479f2476f34035a03edf954b7262ebc4094620ca91dbe524821f86d244",
+    "designs/004_pdm_tone/rtl/audio_port.sv": "c699f339bd2e46bc703d624e2d778271e129b7f1ea8e179bc61a76df0d53aefa",
     "designs/004_pdm_tone/rtl/i2s_receive.sv": "820a7287b7156d4af2670a529312c52854837a09ea8ad2b9c1c410a92c33325d",
     "designs/004_pdm_tone/rtl/halfband_stereo.sv": "6befc10a1d7f9c2d331e5f87aeb4914785aae53bf6ac9ca24fd83ab11e945940",
     "designs/004_pdm_tone/rtl/halfband_coeff.sv": "ddc193dc576b7b3292028422a4fdd35061f7900f9d8c1a2687600a86a2467fb7",
@@ -75,7 +75,8 @@
     "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
     "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
     "designs/004_pdm_tone/constraints/analog2pdm.cst": "30eff246afcbebef6c8f545a08e9ced1c6315f1086b3fbbd63111963ddd2cd58",
-    "designs/004_pdm_tone/constraints/analog2pdm.sdc": "c6ffca417be33861d50496ca5713096b254f421a266a4d3a8f976bb227ddaecc"
+    "designs/004_pdm_tone/constraints/analog2pdm.sdc": "c6ffca417be33861d50496ca5713096b254f421a266a4d3a8f976bb227ddaecc",
+    "common/rtl/audio_meter.sv": "fbf40c2577f6a6d23c75455d3625117898700c91830644d958f2eb5b448cd54f"
   },
   "user_measured_rms": [
     {
@@ -110,5 +111,23 @@
     }
   ],
   "measurement_scope": "Receiver channel not specified; measurement includes FPGA, PDM wiring, MCHStreamer and monitor. Not an isolated FPGA frequency-response measurement.",
-  "diagnostic_conclusion": "Severe attenuation isolated to bypassed path: PC playback/analog output, wiring, PCM1808 board or I2S reception. Internal test does not validate I2S receiver. Residual high-frequency attenuation source undetermined."
+  "diagnostic_conclusion": "Severe attenuation isolated to bypassed path: PC playback/analog output, wiring, PCM1808 board or I2S reception. Internal test does not validate I2S receiver. Residual high-frequency attenuation source undetermined.",
+  "hardware_validation_before_led_revision": {
+    "bitstream_sha256": "42afbd56e9faa31c1d206f0d786acb05b65387a77a2245255e6d6b0d729b895c",
+    "hardware_audio_observation": "User measured internal tones through MCHStreamer ASIO at 48 kHz. Severe low-cutoff attenuation from ADC-path test not reproduced; residual 20 kHz attenuation remains.",
+    "sram_programming": "PASS; operation 2; exit code 0 and Finished."
+  },
+  "led_revision": {
+    "mode": "L/R maximum peak; logarithmic 31 levels at 2 dB steps from -60 to 0 dBFS before headroom",
+    "pwm_hz": 1000,
+    "decay_full_scale_to_zero_ms": 47.8125,
+    "pwm_domain": "audio MCLK, single-bit two-stage CDC to system clock",
+    "fault_blink_hz": 2,
+    "fault_priority": true,
+    "simulation": "PASS threshold, logarithmic mapping, signed minimum, decay, PWM duty, reset, invalid samples, fault blink override, existing audio regression",
+    "build": "PASS setup=0 hold=0",
+    "additional_dsp_blocks": 0,
+    "programming": "not performed",
+    "release_frames_per_duty_step": 9
+  }
 }
