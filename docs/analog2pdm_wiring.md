@@ -46,11 +46,16 @@ MCHStreamerとはGNDを共通にし、MCHStreamer J3-2の3.3 V出力はTangの�
 
 | MCHStreamer J3 | Tang Nano 9K | 方向 |
 |---|---|---|
-| 11: PDM CLK | 63: PDM_CLK A | MCH→FPGA |
-| 12: PDM CLK2 | 35: PDM_CLK B | MCH→FPGA |
-| 3: PDM 1-2 | 41: PDM_DATA A | FPGA→MCH |
-| 4: PDM 3-4 | 42: PDM_DATA B | FPGA→MCH |
-| 1: GND | GND | 共通 |
+| 11: PDM CLK | J6-1 / FPGA 63: PDM_CLK A | MCH→FPGA |
+| 12: PDM CLK2 | J6-19 / FPGA 49: PDM_CLK B | MCH→FPGA |
+| 3: PDM 1-2 | J6-20 / FPGA 31: PDM_DATA A | FPGA→MCH |
+| 4: PDM 3-4 | J6-18 / FPGA 48: PDM_DATA B | FPGA→MCH |
+| 1: GND | J6-23 / GND | 共通 |
+
+2026-11-13にPDMの4信号を右側ヘッダーJ6へ集約しました。
+向きはUSB-Cを上にした部品面視点です。旧配線のB CLK=35、A DATA=41、B DATA=42は使用しません。
+ピン31/48/49はLCD信号と共用なので、SPI LCDやRGB LCDは併用しないでください。
+ADC側のピン割り当ては変更ありません。
 
 J3は2 mmピッチです。向きとpin 1を確認し、信号線は短くしてください。
 PDMはLを立ち下がり、Rを立ち上がりで取り込みます。
@@ -104,3 +109,7 @@ MCHStreamer 1台のCLKとCLK2は同じクロックなので、独立周波数の
 - [MCHStreamer User Manual（PDM設定とJ3配線）](https://www.minidsp.com/images/documents/MCHStreamer%20User%20Manual.pdf)
 - [Tang Nano 9K公式回路図](https://dl.sipeed.com/fileList/TANG/Nano%209K/2_Schematic/Tang_Nano_9k_3672_Schematic.pdf)
 - [対象PCM1808基板](https://www.amazon.co.jp/dp/B09BTLPBM4)
+
+2026-11-14: PDM DATA AをFPGAピン77（J6-10）から31（J6-20）へ移しました。
+PDM DATA B／CLK B／DATA AはJ6-18／19／20の隣接した3端子です。
+PDM CLK AはFPGAピン63（J6-1）のままです。ADC信号は変更していません。

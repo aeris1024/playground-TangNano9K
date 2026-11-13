@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-11T23:55:00.574479+09:00",
+  "recorded_at": "2026-11-14T01:00:02.576853+09:00",
   "design": "003_analog2pdm",
   "board": "tang_nano_9k",
   "device": "GW1NR-9C",
@@ -17,7 +17,7 @@
   },
   "resources": {
     "Logic": {
-      "used": 5245,
+      "used": 5246,
       "available": 8640
     },
     "Register": {
@@ -38,7 +38,7 @@
     }
   },
   "bitstream": "build/003_analog2pdm/003_analog2pdm.fs",
-  "bitstream_sha256": "15cdaa967669ad4c9cf634d81da41e0f47a47f474e17e92421bdd60a7453705f",
+  "bitstream_sha256": "ad6a851c9c9234175d357de5db9294f7a87f99c26b57895099bdad4076582d37",
   "source_sha256": {
     "designs/003_analog2pdm/design.toml": "363957ca90d23fc878915a79a11ef2b0916712fec87a1f08042df9196e061314",
     "designs/003_analog2pdm/sim/tb_top.sv": "e0cfa45acdcb5e3ad096a613fd73242a09f7059d60e623846319aaa220ef9725",
@@ -53,13 +53,13 @@
     "designs/003_analog2pdm/rtl/pdm_ddr.sv": "f038608dbbb71ffd24b7d295ae5f29929910c1d7720795bdad09f4135ff10b41",
     "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
     "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
-    "designs/003_analog2pdm/constraints/analog2pdm.cst": "5271dade2db921a1c2735c9a749d6af78a4fe83bf14df2b9a9c22e40308a4e24",
+    "designs/003_analog2pdm/constraints/analog2pdm.cst": "30eff246afcbebef6c8f545a08e9ced1c6315f1086b3fbbd63111963ddd2cd58",
     "designs/003_analog2pdm/constraints/analog2pdm.sdc": "c6ffca417be33861d50496ca5713096b254f421a266a4d3a8f976bb227ddaecc",
     "designs/003_analog2pdm/model/generate_coefficients.py": "ebfa8d659945784de98a81a4e9e6ebdfd0e30ce76947d777e2afb6fbeae72cbb",
     "designs/003_analog2pdm/model/coefficients.json": "62b88fb92606e967a5305f8d69adad031e322f328d6ab7fe479185a35cce2be1",
     "designs/003_analog2pdm/model/verify_audio.py": "0544eac2573d460d3843e57bc9c729a90439c760293e91816def01fb7a265ed1"
   },
-  "hardware_connections": "not_connected",
+  "hardware_connections": "FPGA USB connected; external ADC/PDM wiring not verified",
   "hardware_programming": "not_performed",
   "hardware_result": "pending_user_wiring_and_measurement",
   "flash_programming": "not_performed",
@@ -152,12 +152,20 @@
   },
   "timing_exceptions": "Asynchronous clock groups for A/B/27MHz supervision; first-stage FIFO Gray-pointer D pins only within each audio/reference pair",
   "remaining_warnings": [
-    "PR1014: pin 63 reference clock uses a generic ingress route to the global clock tree"
+    "PR1014: general routing for reference clock A (pin 63) and B (pin 49)"
   ],
   "io_assumptions": {
     "pdm_receiver_setup_ns": 20,
     "pdm_receiver_hold_ns": 0,
     "adc_data_min_ns": -10,
     "adc_data_max_ns": 50
-  }
+  },
+  "pin_assignment_revision": "2026-11-14 right J6 header; DATA B / CLK B / DATA A at J6-18 / 19 / 20; CLK A at J6-1",
+  "pdm_header": {
+    "clk_a": "J6-1 / FPGA 63",
+    "clk_b": "J6-19 / FPGA 49",
+    "data_a": "J6-20 / FPGA 31",
+    "data_b": "J6-18 / FPGA 48"
+  },
+  "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745"
 }

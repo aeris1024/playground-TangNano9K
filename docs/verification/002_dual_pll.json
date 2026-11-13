@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-11T23:50:26.442455+09:00",
+  "recorded_at": "2026-11-13T22:37:05.124229+09:00",
   "design": "002_dual_pll",
   "board": "tang_nano_9k",
   "device": "GW1NR-9C",
@@ -30,19 +30,28 @@
     }
   },
   "bitstream": "build/002_dual_pll/002_dual_pll.fs",
-  "bitstream_sha256": "a709f289d0732b76f667ba95f5063521378276d16350421f5178d701900c2a1a",
+  "bitstream_sha256": "f9eedd7340746438a999596ed13c50eef56c1ef9a039d6f82a208c806c65a0de",
   "source_sha256": {
     "designs/002_dual_pll/design.toml": "559397fbb8ccb843c3288e36f99ad11482b8e4ed53363d6c7b3cc0d26b0e07dc",
     "designs/002_dual_pll/sim/tb_top.sv": "19493643fef33a101f470763a6b66aa97efad161f28845af4ee8873c746dee9b",
     "designs/002_dual_pll/rtl/top.sv": "b0e7dd396a357c1da6b87d31701e6d9b0abe0ac46a0dd8c54d201bc391bc21e7",
     "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
     "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
-    "designs/002_dual_pll/constraints/dual_pll.cst": "59d004428058b0468549d4a23df964500edd5c6a8eecbd45a098f4a79477889e",
+    "designs/002_dual_pll/constraints/dual_pll.cst": "bef395b849ea4e176aad94acb0b82f7b1df7cf36f957e961abd5498cee119d08",
     "designs/002_dual_pll/constraints/dual_pll.sdc": "3d22c95077ae17d51ef5b74f96dcaf6695a91414278d2fb6a5ef5492d727a9fa"
   },
-  "hardware_connections": "not_connected",
+  "hardware_connections": "FPGA USB connected; external ADC/PDM wiring not verified",
   "hardware_programming": "not_performed",
   "hardware_result": "pending_user_wiring_and_measurement",
   "flash_programming": "not_performed",
-  "independent_clock_hardware_test": "deferred; one MCHStreamer provides duplicated clocks"
+  "independent_clock_hardware_test": "deferred; one MCHStreamer provides duplicated clocks",
+  "remaining_warnings": [
+    "PR1014: general routing for reference clock B (pin 49)"
+  ],
+  "pin_assignment_revision": "2026-11-13 right J6 header; USB-C up, component-side view",
+  "pdm_header": {
+    "clk_a": "J6-1 / FPGA 63",
+    "clk_b": "J6-19 / FPGA 49"
+  },
+  "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745"
 }
