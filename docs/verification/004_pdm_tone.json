@@ -1,0 +1,114 @@
+{
+  "recorded_at": "2026-11-14T03:41:04.122064+09:00",
+  "design": "004_pdm_tone",
+  "doctor": "PASS; GW1NR-9C ID=0x1100481B USB=201745",
+  "cli_tests": {
+    "passed": 26,
+    "failed": 0
+  },
+  "simulation": "PASS; six PCM frequencies, gaps, dual-port 1kHz PDM amplitude",
+  "simulated_pdm_amplitude": {
+    "A": 0.062689,
+    "B": 0.062942
+  },
+  "build": "PASS",
+  "timing_violated_endpoints": {
+    "setup": 0,
+    "hold": 0
+  },
+  "bitstream": "build/004_pdm_tone/004_pdm_tone.fs",
+  "sram_programming": "PASS; operation 2; exit code 0 and Finished.",
+  "hardware_audio_observation": "User measured internal tones through MCHStreamer ASIO at 48 kHz. Severe low-cutoff attenuation from ADC-path test not reproduced; residual 20 kHz attenuation remains.",
+  "flash_programming": "not performed",
+  "frequencies_hz": [
+    100,
+    1000,
+    5000,
+    10000,
+    15000,
+    20000
+  ],
+  "tone_seconds": 3,
+  "gap_seconds": 0.5,
+  "source_peak_dbfs": -18,
+  "headroom_db": -6.020599913,
+  "ideal_rms_dbfs": -27.03089987,
+  "resources": {
+    "Logic": {
+      "used": 5418,
+      "available": 8640
+    },
+    "Register": {
+      "used": 2966,
+      "available": 6693
+    },
+    "BSRAM": {
+      "used": 14,
+      "available": 26
+    },
+    "DSP": {
+      "used": 10,
+      "available": 10
+    },
+    "rPLL": {
+      "used": 2,
+      "available": 2
+    }
+  },
+  "remaining_warnings": [
+    "PR1014: generic clock routing on PDM reference A/B",
+    "EX3791: bounded arithmetic/zero extension narrowed to 24/9 bits in tone generator; PCM values checked by simulation"
+  ],
+  "bitstream_sha256": "42afbd56e9faa31c1d206f0d786acb05b65387a77a2245255e6d6b0d729b895c",
+  "source_sha256": {
+    "designs/004_pdm_tone/design.toml": "80a434ec50ce60db1248b8a58c42af1fbc2dcaeb37f0f9673eb5a90f728a3eb5",
+    "designs/004_pdm_tone/sim/tb_top.sv": "05b626474a16fdc54e608079d3278f40f4a02a4c7fadab0efbb75d0f8ad005fc",
+    "designs/004_pdm_tone/rtl/top.sv": "ffec1e6cca396f3bc3e3da9434ad078c1a834ee4550111df57f4e9b2cf8901a3",
+    "designs/004_pdm_tone/rtl/audio_port.sv": "e87dc009c1f5018ae9cce40a3c1390453d0148f3986fa916a9e4d2fe3aa0c000",
+    "designs/004_pdm_tone/rtl/i2s_receive.sv": "820a7287b7156d4af2670a529312c52854837a09ea8ad2b9c1c410a92c33325d",
+    "designs/004_pdm_tone/rtl/halfband_stereo.sv": "6befc10a1d7f9c2d331e5f87aeb4914785aae53bf6ac9ca24fd83ab11e945940",
+    "designs/004_pdm_tone/rtl/halfband_coeff.sv": "ddc193dc576b7b3292028422a4fdd35061f7900f9d8c1a2687600a86a2467fb7",
+    "designs/004_pdm_tone/rtl/stereo_fifo.sv": "fd05ea05a3c488c9d9ee23b5fce1da7fd26e912643b35b6f7bb674af806520d5",
+    "designs/004_pdm_tone/rtl/cic_sigma.sv": "6fd3c7e942cb727ac118dfa2c7e09ca7eb6d8f8b3a1d5549a17bd1a9c83f529a",
+    "designs/004_pdm_tone/rtl/pdm_backend.sv": "d0633f983a4a3e598e04a0d7b39923d92dd984edc5eaa8467ef312704ee192cc",
+    "designs/004_pdm_tone/rtl/pdm_ddr.sv": "f038608dbbb71ffd24b7d295ae5f29929910c1d7720795bdad09f4135ff10b41",
+    "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
+    "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
+    "designs/004_pdm_tone/constraints/analog2pdm.cst": "30eff246afcbebef6c8f545a08e9ced1c6315f1086b3fbbd63111963ddd2cd58",
+    "designs/004_pdm_tone/constraints/analog2pdm.sdc": "c6ffca417be33861d50496ca5713096b254f421a266a4d3a8f976bb227ddaecc"
+  },
+  "user_measured_rms": [
+    {
+      "hz": 100,
+      "rms_dbfs": -27.3,
+      "relative_to_1khz_db": -0.1
+    },
+    {
+      "hz": 1000,
+      "rms_dbfs": -27.2,
+      "relative_to_1khz_db": 0.0
+    },
+    {
+      "hz": 5000,
+      "rms_dbfs": -27.2,
+      "relative_to_1khz_db": 0.0
+    },
+    {
+      "hz": 10000,
+      "rms_dbfs": -27.5,
+      "relative_to_1khz_db": -0.3
+    },
+    {
+      "hz": 15000,
+      "rms_dbfs": -28.1,
+      "relative_to_1khz_db": -0.9
+    },
+    {
+      "hz": 20000,
+      "rms_dbfs": -30.6,
+      "relative_to_1khz_db": -3.4
+    }
+  ],
+  "measurement_scope": "Receiver channel not specified; measurement includes FPGA, PDM wiring, MCHStreamer and monitor. Not an isolated FPGA frequency-response measurement.",
+  "diagnostic_conclusion": "Severe attenuation isolated to bypassed path: PC playback/analog output, wiring, PCM1808 board or I2S reception. Internal test does not validate I2S receiver. Residual high-frequency attenuation source undetermined."
+}

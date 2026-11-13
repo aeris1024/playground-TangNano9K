@@ -57,6 +57,8 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 | `002_dual_pll` | 右側のピン63/49から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
 | `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、SRAMでA/B各系統の音楽信号を実機確認 |
 
+`004_pdm_tone`はADC迂回の内部テスト音診断です。[測定手順](designs/004_pdm_tone/README.md)を参照してください。
+
 Analog2PDMの詳細は[デザイン説明](designs/003_analog2pdm/README.md)、
 実機接続は[配線・測定手順](docs/analog2pdm_wiring.md)を参照してください。
 PDM CLK Aは右側J6-1、残るDATA B／CLK B／DATA Aは隣接するJ6-19〜21です。
@@ -219,3 +221,7 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 - [Sipeed Tang Nano 9K](https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-9K/Nano-9K.html)
 - [公式LEDプロジェクト](https://github.com/sipeed/TangNano-9K-example/tree/main/led)
 - [公式回路図](https://dl.sipeed.com/fileList/TANG/Nano%209K/2_Schematic/Tang_Nano_9k_3672_Schematic.pdf)
+
+### 音質切り分けの進捗
+
+- 004_pdm_tone: 等振幅の内部テスト音でADC以前とPDM出力経路を切り分け。内部音の実測で大きな高域減衰は再現せず、迂回したPC／ADC／I2S経路を調査。20 kHzの残留減衰は未解決。

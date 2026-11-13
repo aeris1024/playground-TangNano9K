@@ -53,7 +53,7 @@ class FpgaCliTests(unittest.TestCase):
         designs = fpga.discover_designs(MODULE_PATH.parents[1])
         self.assertEqual(
             set(designs),
-            {"001_blink", "002_dual_pll", "003_analog2pdm"},
+            {"001_blink", "002_dual_pll", "003_analog2pdm", "004_pdm_tone"},
         )
         self.assertEqual(designs["001_blink"].top, "top")
 
