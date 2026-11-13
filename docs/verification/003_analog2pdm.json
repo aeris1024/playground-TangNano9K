@@ -59,9 +59,9 @@
     "designs/003_analog2pdm/model/coefficients.json": "62b88fb92606e967a5305f8d69adad031e322f328d6ab7fe479185a35cce2be1",
     "designs/003_analog2pdm/model/verify_audio.py": "0544eac2573d460d3843e57bc9c729a90439c760293e91816def01fb7a265ed1"
   },
-  "hardware_connections": "FPGA USB connected; external ADC/PDM wiring not verified",
-  "hardware_programming": "not_performed",
-  "hardware_result": "pending_user_wiring_and_measurement",
+  "hardware_connections": "User corrected header connections; both ports show LED activity",
+  "hardware_programming": "SRAM program succeeded per programmer log; user reports using fpga.ps1 program 003_analog2pdm",
+  "hardware_result": "User verified music-like signals with PC audio connected to ADC A, then moved the same source to ADC B and confirmed music-like signals there; basic hardware audio operation verified on both ports via SRAM. Individual L/R mapping and measured quality pending.",
   "flash_programming": "not_performed",
   "independent_clock_hardware_test": "deferred; one MCHStreamer provides duplicated clocks",
   "audio_model": {
@@ -160,12 +160,26 @@
     "adc_data_min_ns": -10,
     "adc_data_max_ns": 50
   },
-  "pin_assignment_revision": "2026-11-14 right J6 header; DATA B / CLK B / DATA A at J6-18 / 19 / 20; CLK A at J6-1",
+  "pin_assignment_revision": "2026-11-14 corrected header numbering: J6-18 is 5V; CLK B at J6-20 / FPGA49; FPGA pin constraints unchanged",
   "pdm_header": {
     "clk_a": "J6-1 / FPGA 63",
-    "clk_b": "J6-19 / FPGA 49",
-    "data_a": "J6-20 / FPGA 31",
-    "data_b": "J6-18 / FPGA 48"
+    "clk_b": "J6-20 / FPGA 49",
+    "data_a": "J6-21 / FPGA 31",
+    "data_b": "J6-19 / FPGA 48"
   },
-  "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745"
+  "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745",
+  "header_numbering_correction": "J6-18 is 5V; DATA B/CLK B/DATA A are J6-19/20/21. User reports both ports started after wiring correction.",
+  "user_observation_2026_11_14": {
+    "leds": "four LEDs across A/B lit; exact LED numbers not separately stated",
+    "analog_input": "PC music into ADC A, then same source moved to ADC B",
+    "capture": "MCHStreamer ASIO 48 kHz; screenshot shows continuous audio-like signals on inputs 1/2 and activity on 3/4",
+    "pending": [
+      "Confirm LED1/2/4/5 on and LED3/6 off",
+      "Individual four-channel L/R mapping",
+      "Listening and quantitative audio quality",
+      "Long-duration stability",
+      "Flash programming and power-cycle boot"
+    ],
+    "b_port_result": "User confirmed music-like signals after moving source to ADC B"
+  }
 }

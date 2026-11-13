@@ -55,11 +55,11 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 |---|---|---|
 | `001_blink` | LED1の1 Hz点滅 | SRAM／Flashからの起動を実機確認済み |
 | `002_dual_pll` | 右側のピン63/49から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
-| `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、未配線 |
+| `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、SRAMでA/B各系統の音楽信号を実機確認 |
 
 Analog2PDMの詳細は[デザイン説明](designs/003_analog2pdm/README.md)、
 実機接続は[配線・測定手順](docs/analog2pdm_wiring.md)を参照してください。
-PDM CLK Aは右側J6-1、残るDATA B／CLK B／DATA Aは隣接するJ6-18〜20です。
+PDM CLK Aは右側J6-1、残るDATA B／CLK B／DATA Aは隣接するJ6-19〜21です。
 ビルドはsetup/hold違反数も確認し、違反がある場合は失敗します。
 
 書き込みは`GW1NR-9C`、operation 2（SRAM Program）を使います。

@@ -48,10 +48,11 @@
   "remaining_warnings": [
     "PR1014: general routing for reference clock B (pin 49)"
   ],
-  "pin_assignment_revision": "2026-11-13 right J6 header; USB-C up, component-side view",
+  "pin_assignment_revision": "2026-11-14 corrected header numbering: J6-18 is 5V; CLK B at J6-20 / FPGA49; FPGA pin constraints unchanged",
   "pdm_header": {
     "clk_a": "J6-1 / FPGA 63",
-    "clk_b": "J6-19 / FPGA 49"
+    "clk_b": "J6-20 / FPGA 49"
   },
-  "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745"
+  "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745",
+  "header_numbering_correction": "Previous J6 references were off by one after the 5V contact; reported hardware test connected B clock to DATA B output at J6-19. Hardware retest pending."
 }

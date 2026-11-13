@@ -21,7 +21,7 @@
 
 | Tang Nano 9K | PCM1808 A/B |
 |---|---|
-| 5 V（公式回路図 J6-22） | 各基板の5V |
+| 5 V（公式回路図 J6-18） | 各基板の5V |
 | 3.3 V（J6-24） | 各基板の3.3V |
 | GND（J6-23など） | 各基板のGND |
 
@@ -47,9 +47,9 @@ MCHStreamerとはGNDを共通にし、MCHStreamer J3-2の3.3 V出力はTangの�
 | MCHStreamer J3 | Tang Nano 9K | 方向 |
 |---|---|---|
 | 11: PDM CLK | J6-1 / FPGA 63: PDM_CLK A | MCH→FPGA |
-| 12: PDM CLK2 | J6-19 / FPGA 49: PDM_CLK B | MCH→FPGA |
-| 3: PDM 1-2 | J6-20 / FPGA 31: PDM_DATA A | FPGA→MCH |
-| 4: PDM 3-4 | J6-18 / FPGA 48: PDM_DATA B | FPGA→MCH |
+| 12: PDM CLK2 | J6-20 / FPGA 49: PDM_CLK B | MCH→FPGA |
+| 3: PDM 1-2 | J6-21 / FPGA 31: PDM_DATA A | FPGA→MCH |
+| 4: PDM 3-4 | J6-19 / FPGA 48: PDM_DATA B | FPGA→MCH |
 | 1: GND | J6-23 / GND | 共通 |
 
 2026-11-13にPDMの4信号を右側ヘッダーJ6へ集約しました。
@@ -110,6 +110,21 @@ MCHStreamer 1台のCLKとCLK2は同じクロックなので、独立周波数の
 - [Tang Nano 9K公式回路図](https://dl.sipeed.com/fileList/TANG/Nano%209K/2_Schematic/Tang_Nano_9k_3672_Schematic.pdf)
 - [対象PCM1808基板](https://www.amazon.co.jp/dp/B09BTLPBM4)
 
-2026-11-14: PDM DATA AをFPGAピン77（J6-10）から31（J6-20）へ移しました。
-PDM DATA B／CLK B／DATA AはJ6-18／19／20の隣接した3端子です。
+2026-11-14: PDM DATA AをFPGAピン77（J6-10）から31（J6-21）へ移しました。
+PDM DATA B／CLK B／DATA AはJ6-19／20／21の隣接した3端子です。
 PDM CLK AはFPGAピン63（J6-1）のままです。ADC信号は変更していません。
+
+## 端子番号の訂正（2026-11-14）
+
+以前のJ6-18〜20という案内は誤りでした。USB-C側を1とした右側ヘッダーは、
+J6-18が5 V、J6-19がFPGAピン48（DATA B出力）、J6-20がピン49（CLK B入力）、
+J6-21がピン31（DATA A出力）、J6-22がピン32、J6-23がGND、J6-24が3.3 Vです。
+電源を切ってBクロックをJ6-20へ接続し直してください。ADCの5 V電源端子もJ6-18か確認してください。
+FPGA物理ピン番号とCSTの割り当ては変更ありません。
+
+## 実機疎通確認（2026-11-14）
+
+正しい端子位置へ接続後、ユーザーがA/Bで合計4個のLED点灯を確認しました。
+PCの音楽をADC Aへ入力してASIO上で音声らしい波形を確認し、
+同じ音源をADC Bへ移した場合も音楽信号らしい波形を確認しました。
+SRAMで両系統の基本疎通を確認済みです。左右個別対応、定量的な音質、長時間安定性、Flash起動は別途確認します。
