@@ -1,0 +1,91 @@
+{
+  "recorded_at": "2026-11-16T20:24:30.956624+09:00",
+  "design": "005_analog2pdm_1v8",
+  "board": "tang_nano_9k",
+  "device": "GW1NR-9C",
+  "toolchain": "Gowin Education V1.9.11.03; Icarus Verilog 14.0; Python 3.14.6",
+  "cli_tests": {
+    "passed": 26,
+    "failed": 0
+  },
+  "doctor": "PASS",
+  "functional_simulation": "PASS existing 003 regression adapted for formal design",
+  "build": "PASS",
+  "timing_violated_endpoints": {
+    "setup": 0,
+    "hold": 0
+  },
+  "resources": {
+    "Logic": {
+      "used": 6402,
+      "available": 8640
+    },
+    "Register": {
+      "used": 3164,
+      "available": 6693
+    },
+    "BSRAM": {
+      "used": 12,
+      "available": 26
+    },
+    "DSP": {
+      "used": 10,
+      "available": 10
+    },
+    "rPLL": {
+      "used": 2,
+      "available": 2
+    }
+  },
+  "bitstream": "build/005_analog2pdm_1v8/005_analog2pdm_1v8.fs",
+  "source_sha256": {
+    "designs/005_analog2pdm_1v8/design.toml": "6fdd36a7043b0ebfa163e41589f8c1c36720441bc04cd94fe4de7784ef6e2263",
+    "designs/005_analog2pdm_1v8/sim/tb_top.sv": "824b4bf5b8d3fa1649fea748b788cab164a7017efb4d31684622ae23f7d9b915",
+    "designs/005_analog2pdm_1v8/rtl/top.sv": "bb804e479f2476f34035a03edf954b7262ebc4094620ca91dbe524821f86d244",
+    "designs/005_analog2pdm_1v8/rtl/audio_port.sv": "f95b85fbfe18e486fabc646a1f078db2ab93efe6963f6d293960aa454891db25",
+    "designs/005_analog2pdm_1v8/rtl/i2s_receive.sv": "18944921b3bda1949389efb616e25b6e6072f0fdb4b84d3cb27c67ac581b84db",
+    "designs/005_analog2pdm_1v8/rtl/halfband_stereo.sv": "6befc10a1d7f9c2d331e5f87aeb4914785aae53bf6ac9ca24fd83ab11e945940",
+    "designs/005_analog2pdm_1v8/rtl/halfband_coeff.sv": "ddc193dc576b7b3292028422a4fdd35061f7900f9d8c1a2687600a86a2467fb7",
+    "designs/005_analog2pdm_1v8/rtl/stereo_fifo.sv": "b05a17fd3663685846437f86215a2ee0cae2e535aeb864133f0cfee26fc192bb",
+    "designs/005_analog2pdm_1v8/rtl/cic_sigma.sv": "6fd3c7e942cb727ac118dfa2c7e09ca7eb6d8f8b3a1d5549a17bd1a9c83f529a",
+    "designs/005_analog2pdm_1v8/rtl/pdm_backend.sv": "d0633f983a4a3e598e04a0d7b39923d92dd984edc5eaa8467ef312704ee192cc",
+    "designs/005_analog2pdm_1v8/rtl/pdm_ddr.sv": "f038608dbbb71ffd24b7d295ae5f29929910c1d7720795bdad09f4135ff10b41",
+    "common/rtl/audio_meter.sv": "fbf40c2577f6a6d23c75455d3625117898700c91830644d958f2eb5b448cd54f",
+    "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
+    "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
+    "designs/005_analog2pdm_1v8/constraints/analog2pdm.cst": "1eb1a2c6317105f0b93157e8e010c3f22d29b96786473a830885d01ae1dd52df",
+    "designs/005_analog2pdm_1v8/constraints/analog2pdm.sdc": "3babdb5f2f3ec497e506502e46d4d9599956ab766698f99eee612c8753fda7ae"
+  },
+  "pdm_io": {
+    "CLK_A": "FPGA85 J6-3",
+    "DATA_A": "FPGA84 J6-4",
+    "CLK_B": "FPGA83 J6-5",
+    "DATA_B": "FPGA82 J6-6"
+  },
+  "pdm_voltage": "LVCMOS18 BANK3 1.8V; ADC remains LVCMOS33",
+  "remaining_warnings": [
+    "PR1014: generic clock routing for PDM references A/B"
+  ],
+  "reset_cdc": "FIFO read reset deasserted via three reference-clock stages. Exceptions only to reset-release synchronizer CLEAR pins and first FIFO Gray-pointer synchronizer D pins. Downstream data paths remain timed.",
+  "hardware_validation": {
+    "status": "PASS equivalent prototype",
+    "user_observation": "LED1/2/4/5 on; normal audio confirmed on both A/B",
+    "prototype_rtl_and_constraints_match_formal_design": true,
+    "prototype_programming": {
+      "recorded_at": "2026-11-16T20:19:19.442492+09:00",
+      "target": "GW1NR-9C",
+      "idcode": "0x1100481B",
+      "usb_location": "201745",
+      "bitstream": "build/feasibility_1v8/gowin_project_cdc/probe_1v8_cdc/impl/pnr/probe_1v8_cdc.fs",
+      "bitstream_sha256": "adc926a9107de3363ee05430aee3af50be18b6b1aa0df40d9ac27b5b6f325906",
+      "log": "build/feasibility_1v8/program_sram.log",
+      "flash": "not changed",
+      "hardware_observation": "pending user test"
+    },
+    "formal_bitstream_programming": "not performed; hardware currently retains the confirmed equivalent prototype",
+    "quality_and_timing_measurement": "not performed; functional audio observation only"
+  },
+  "flash_programming": "not performed",
+  "switchable_voltage_mode": "not implemented; separate design from 003",
+  "bitstream_sha256": "6b53cba8c4b4abadad974ed2ae4b3717e2c2985493c35572a98085027adf5519"
+}

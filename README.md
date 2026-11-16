@@ -56,6 +56,7 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 | `001_blink` | LED1の1 Hz点滅 | SRAM／Flashからの起動を実機確認済み |
 | `002_dual_pll` | 右側のピン63/49から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
 | `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、SRAMでA/B各系統の音楽信号を実機確認 |
+| `005_analog2pdm_1v8` | PDM側を1.8 Vへ変更した独立2系統・4ch版 | 同一回路の試作で両PLL LOCK・A/B音声を実機確認 |
 
 `004_pdm_tone`はADC迂回の内部テスト音診断です。[測定手順](designs/004_pdm_tone/README.md)を参照してください。
 
@@ -233,3 +234,10 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 はんだ付け済みの配線に合わせ、DATA A=FPGA48 / J6-19、DATA B=FPGA31 / J6-21へ入れ替えました。
 変更後、ユーザーがA/Bともに正常な音声を確認しました。004のピン割り当ては従来のままです。
 今回限りのGPIO／DDR診断デザインは、確認完了後にソース・生成物・個別記録を削除しました。
+
+### 1.8 V版Analog2PDM
+
+`005_analog2pdm_1v8`を正式追加しました。PDM側はCLK A=J6-3、DATA A=J6-4、CLK B=J6-5、DATA B=J6-6です。
+ADC側は3.3 Vのままです。[配線と検証結果](designs/005_analog2pdm_1v8/README.md)を参照してください。
+同一回路の試作でLED1/2/4/5点灯とA/B両方の音声を実機確認済みです。Flash起動・定量音質評価は今後の確認項目です。
+3.3 V版003と診断用004は変更していません。
