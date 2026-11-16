@@ -1,0 +1,186 @@
+{
+  "recorded_at": "2026-11-16T21:01:58.356148+09:00",
+  "design": "006_analog2pdm_select",
+  "board": "tang_nano_9k",
+  "toolchain": "Gowin Education V1.9.11.03; Icarus Verilog 14.0; Python 3.14.6",
+  "doctor": "PASS; GW1NR-9C ID=0x1100481B USB=201745",
+  "functional_simulation": {
+    "result": "PASS",
+    "modes": [
+      "1.8V MODE grounded",
+      "3.3V MODE open (tri1)"
+    ],
+    "checks": [
+      "I2S signed 24-bit, one-bit delay, L/R",
+      "ADC delay 0ns and 50ns",
+      "PDM stereo density and edge swap",
+      "phase-offset independent clocks at +/-1000ppm",
+      "A/B stop, isolation and restart",
+      "unsupported 2.8224MHz mute",
+      "PWM and fault blink priority",
+      "inactive DATA Low",
+      "mode changes ignored after boot latch"
+    ]
+  },
+  "cli_unit_tests": {
+    "passed": 26,
+    "failed": 0
+  },
+  "build": "PASS",
+  "timing_violated_endpoints": {
+    "setup": 0,
+    "hold": 0
+  },
+  "hold_fix": "Capture external ADC DOUT on rising physical BCLK, consume one MCLK later. Define generated BCLK on internal nets. No ADC false-path/multicycle exceptions.",
+  "adc_input_path_summaries": [
+    {
+      "Slack": "112.651",
+      "Data Arrival Time": "215.074",
+      "Data Required Time": "327.725",
+      "From": "adc_data_b_ibuf",
+      "To": "port_b/receive/adc_sample_s0",
+      "Launch Clk": "adc_bclk_b_33:[F]",
+      "Latch Clk": "adc_bclk_b_33:[R]"
+    },
+    {
+      "Slack": "112.651",
+      "Data Arrival Time": "215.074",
+      "Data Required Time": "327.725",
+      "From": "adc_data_a_ibuf",
+      "To": "port_a/receive/adc_sample_s0",
+      "Launch Clk": "adc_bclk_a_33:[F]",
+      "Latch Clk": "adc_bclk_a_33:[R]"
+    },
+    {
+      "Slack": "152.305",
+      "Data Arrival Time": "154.152",
+      "Data Required Time": "1.847",
+      "From": "adc_data_b_ibuf",
+      "To": "port_b/receive/adc_sample_s0",
+      "Launch Clk": "adc_bclk_b_33:[F]",
+      "Latch Clk": "adc_bclk_b_33:[R]"
+    },
+    {
+      "Slack": "152.305",
+      "Data Arrival Time": "154.152",
+      "Data Required Time": "1.847",
+      "From": "adc_data_a_ibuf",
+      "To": "port_a/receive/adc_sample_s0",
+      "Launch Clk": "adc_bclk_a_33:[F]",
+      "Latch Clk": "adc_bclk_a_33:[R]"
+    }
+  ],
+  "resources": {
+    "Logic": {
+      "used": 6338,
+      "available": 8640
+    },
+    "Register": {
+      "used": 3189,
+      "available": 6693
+    },
+    "BSRAM": {
+      "used": 12,
+      "available": 26
+    },
+    "DSP": {
+      "used": 10,
+      "available": 10
+    },
+    "rPLL": {
+      "used": 2,
+      "available": 2
+    },
+    "IOLOGIC": {
+      "used": 4,
+      "available": 97
+    }
+  },
+  "ports": {
+    "1.8V": {
+      "CLK_A": "J6-6 FPGA82",
+      "DATA_A": "J6-7 FPGA81",
+      "CLK_B": "J6-8 FPGA80",
+      "DATA_B": "J6-9 FPGA79"
+    },
+    "3.3V": {
+      "CLK_A": "J6-1 FPGA63",
+      "DATA_A": "J6-19 FPGA48",
+      "CLK_B": "J6-20 FPGA49",
+      "DATA_B": "J6-21 FPGA31"
+    },
+    "MODE": "J6-22 FPGA32; LVCMOS33 internal UP; open=3.3V, GND=1.8V; boot latch ~10ms"
+  },
+  "programming": {
+    "result": "PASS",
+    "operation": 2,
+    "target": "SRAM",
+    "idcode": "0x1100481B",
+    "usb_location": "201745",
+    "exit_code": 0,
+    "completion": "Finished.",
+    "mode_prepared_by_user": "3.3V, MODE open; user reported wiring ready",
+    "log": "build/006_analog2pdm_select/program.log"
+  },
+  "user_observed_hardware": {
+    "3.3V": "PASS: user confirmed LED1/2/4/5 and normal audio on A/B",
+    "1.8V": "Audio on A/B confirmed. A-side LED2 dropouts and clicks occurred with simultaneous unselected 3.3V clock input from MCHStreamer. User reported symptom disappeared after stopping that 3.3V clock. Concurrent-input hardware stability remains unresolved."
+  },
+  "flash": "not written; power-cycle boot not tested for 006",
+  "warnings": [
+    "CK3000 during synthesis: sys_clk appears through boot-mode control before explicit selected-root constraints are applied; PLL parameters remain 3.072MHz x4.",
+    "TA1121 on unused PLL CLKOUTP/CLKOUTD/CLKOUTD3: multiple masters; used CLKOUT explicitly constrained for both modes.",
+    "TA1117 on LRCLK/audio relation: LRCLK is an output-only divider, not an internal capture clock; ADC DOUT launch/capture uses BCLK and is explicitly timed.",
+    "NL0002: coefficient ROM module swept after synthesis optimization."
+  ],
+  "remaining_hardware_checks": [
+    "clock stop/restart and independent A/B operation",
+    "external waveforms, voltage and board timing budgets",
+    "quantitative audio evaluation"
+  ],
+  "bitstream": "build/006_analog2pdm_select/006_analog2pdm_select.fs",
+  "bitstream_sha256": "e0e70f9969a3555e009feb03d61a7de6e322089696c0f592f163d79a9cc53a54",
+  "source_sha256": {
+    "designs/006_analog2pdm_select/constraints/analog2pdm.cst": "6ef9f97c3a14d85b3c54b8c034823543e6a7cf377967850ff813e37262dcb55d",
+    "designs/006_analog2pdm_select/constraints/analog2pdm.sdc": "dca2aab2b90aa6ce7829687b5c84c1e5a389545fd8172a961003204f3e69e812",
+    "designs/006_analog2pdm_select/design.toml": "ea46fd2c8bbae0bc3c5265854950653695efa744a0a172c36fffaa0d8122691a",
+    "designs/006_analog2pdm_select/README.md": "c70f3c411d0e67a0376277ad92f95746ad4799a9f4d542e5fb6da90117d75f64",
+    "designs/006_analog2pdm_select/rtl/audio_port.sv": "192fcb8765b7b1b3ad78dc221a2b64abdeec2bd26d2b111e13e32d2af533526e",
+    "designs/006_analog2pdm_select/rtl/cic_sigma.sv": "6fd3c7e942cb727ac118dfa2c7e09ca7eb6d8f8b3a1d5549a17bd1a9c83f529a",
+    "designs/006_analog2pdm_select/rtl/halfband_coeff.sv": "ddc193dc576b7b3292028422a4fdd35061f7900f9d8c1a2687600a86a2467fb7",
+    "designs/006_analog2pdm_select/rtl/halfband_stereo.sv": "6befc10a1d7f9c2d331e5f87aeb4914785aae53bf6ac9ca24fd83ab11e945940",
+    "designs/006_analog2pdm_select/rtl/i2s_receive.sv": "02fc920f773bc13aadc72980a820879e9fe047c2a7047183205bb68b3006275d",
+    "designs/006_analog2pdm_select/rtl/pdm_backend.sv": "d0633f983a4a3e598e04a0d7b39923d92dd984edc5eaa8467ef312704ee192cc",
+    "designs/006_analog2pdm_select/rtl/pdm_ddr.sv": "f038608dbbb71ffd24b7d295ae5f29929910c1d7720795bdad09f4135ff10b41",
+    "designs/006_analog2pdm_select/rtl/stereo_fifo.sv": "b05a17fd3663685846437f86215a2ee0cae2e535aeb864133f0cfee26fc192bb",
+    "designs/006_analog2pdm_select/rtl/top.sv": "866d2fc814c69fff1867db0bff4226bb014067dc134f73f61214db10a52d51f8",
+    "designs/006_analog2pdm_select/sim/tb_top.sv": "a21953141e9d55577217c42e408b7a9afe7b58e8600cc96a32ee9c3b5b132121"
+  },
+  "logs": {
+    "sim": "build/006_analog2pdm_select/sim/run.log",
+    "build": "build/006_analog2pdm_select/build.log",
+    "timing": "build/006_analog2pdm_select/gowin_project/006_analog2pdm_select/impl/pnr/006_analog2pdm_select_tr_content.html"
+  },
+  "accepted_operation": {
+    "date": "2026-11-16",
+    "user_accepted": true,
+    "clock_supply": "Supply PDM clocks only to the selected voltage connector.",
+    "hardware_confirmed": "A/B audio on both 3.3V and 1.8V; 1.8V dropouts disappeared when unselected 3.3V clocks were stopped.",
+    "limitation": "Concurrent clock supply to both voltage connectors remains unsupported in operation; root cause not identified."
+  },
+  "additional_validation": {
+    "recorded_at": "2026-11-16T21:16:17.233154+09:00",
+    "simulation": "PASS both modes with continuous unselected input clocks at unrelated frequencies and phases, including selected-clock stop/restart",
+    "testbench_sha256": "e1dad30a9346789ffbff1c6ea36b177c498faa01c425ea03cfbbed1beb5146ff",
+    "rtl_changes": "none; FPGA retains formal 006",
+    "workaround": "Supply clocks only to the selected voltage connector; this is not a proven RTL requirement.",
+    "root_cause": "not identified; cannot yet distinguish signal integrity/coupling/grounding from FPGA physical clock implementation",
+    "temporary_probe": {
+      "path": "build/probe_006_clock_fault",
+      "sim": "PASS both modes, startup false-alarm check, injected fault history",
+      "build": "PASS setup=0 hold=0",
+      "programmed": false,
+      "leds": "LED1/2/3 normal A; LED4 sticky A clock-good loss, LED5 sticky A processing reset, LED6 sticky A FIFO underflow; armed after first run"
+    }
+  }
+}

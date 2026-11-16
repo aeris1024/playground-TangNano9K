@@ -57,6 +57,7 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 | `002_dual_pll` | 右側のピン63/49から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
 | `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、SRAMでA/B各系統の音楽信号を実機確認 |
 | `005_analog2pdm_1v8` | PDM側を1.8 Vへ変更した独立2系統・4ch版 | 同一回路の試作で両PLL LOCK・A/B音声を実機確認 |
+| `006_analog2pdm_select` | 起動時のスイッチ入力で1.8 V／3.3 VのPDM端子を選択 | 両電圧のA/B音声を実機確認。使用側だけにクロックを供給する運用 |
 
 `004_pdm_tone`はADC迂回の内部テスト音診断です。[測定手順](designs/004_pdm_tone/README.md)を参照してください。
 
@@ -214,8 +215,9 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
    内蔵Flashへの書き込みと、電源再投入後のFlashからの起動も実機確認済みです。
 2. `002_dual_pll`（2基同時の配置配線と非同期クロックの機能シミュレーション済み）
 3. `003_analog2pdm`（4chのRTL・数値検証・配置配線済み。A/Bの音声疎通を実機確認済み。定量評価は別途）
-4. Analog2PDMの実機4ch評価、その後のFlash保存
-5. ボタン入力、UART、SPI、I2Cなどの周辺回路実験
+4. `005_analog2pdm_1v8`と`006_analog2pdm_select`（固定1.8 V版と起動時の電圧ポート選択版）
+5. Analog2PDMの実機4ch定量評価、006の停止復帰評価、その後のFlash保存
+6. ボタン入力、UART、SPI、I2Cなどの周辺回路実験
 
 ## 参考資料
 
@@ -241,3 +243,12 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 ADC側は3.3 Vのままです。[配線と検証結果](designs/005_analog2pdm_1v8/README.md)を参照してください。
 同一回路の試作でLED1/2/4/5点灯とA/B両方の音声を実機確認済みです。Flash起動・定量音質評価は今後の確認項目です。
 3.3 V版003と診断用004は変更していません。
+
+### 電圧選択版Analog2PDM
+
+`006_analog2pdm_select`はMODE（J6-22）開放で3.3 V、GND接続で1.8 Vを起動時に選びます。
+1.8 V側はCLK A／DATA A／CLK B／DATA BをJ6-6〜9へまとめました。3.3 V側は003と同じです。
+電源OFFで配線・選択を変更します。内部プルアップを使うため外付け10 kΩは不要です。
+3.3 V側と1.8 V側でA/B音声を実機確認しました。使用する電圧側だけにクロックを供給してください。
+1.8 V使用中の未選択3.3 V側へのクロック同時供給では音切れがあり、同時供給時の安定性は未解決です。
+[配線と操作](designs/006_analog2pdm_select/README.md)と[検証記録](docs/verification/006_analog2pdm_select.json)を参照してください。
