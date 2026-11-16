@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-11-14T05:04:07.150304+09:00",
+  "recorded_at": "2026-11-16T19:51:10.830880+09:00",
   "design": "003_analog2pdm",
   "board": "tang_nano_9k",
   "device": "GW1NR-9C",
@@ -38,7 +38,7 @@
     }
   },
   "bitstream": "build/003_analog2pdm/003_analog2pdm.fs",
-  "bitstream_sha256": "31d99adf9675a2f24232fa1ada74d42c268a7d19c1cc46d65fb05d5def20331e",
+  "bitstream_sha256": "aaa6b306c8b7185e67e3415b9897c46ec00988b278931d23d2314cc3909a7786",
   "source_sha256": {
     "designs/003_analog2pdm/design.toml": "6c7be59a4ef5520383dbdf2ed5732c14f2af729046228ceedc12b5f022d43a9a",
     "designs/003_analog2pdm/sim/tb_top.sv": "732e3795fefbb7d4a2c52dc142da2f8b76b9ef4e64806c0bf058ee26a1341b5f",
@@ -53,7 +53,7 @@
     "designs/003_analog2pdm/rtl/pdm_ddr.sv": "f038608dbbb71ffd24b7d295ae5f29929910c1d7720795bdad09f4135ff10b41",
     "common/rtl/audio_pll.sv": "5c4b5200cb0a14954d1199ac60f201d851599141cecf2f11c8dade99e84d6099",
     "common/rtl/clock_channel.sv": "5f55d81df09e20bb61dac75baef5dce0c20f6c69bda68524202c9f241d20e925",
-    "designs/003_analog2pdm/constraints/analog2pdm.cst": "30eff246afcbebef6c8f545a08e9ced1c6315f1086b3fbbd63111963ddd2cd58",
+    "designs/003_analog2pdm/constraints/analog2pdm.cst": "69ae98360cad6620e60d582be1e466edffeb69f4fa9871b30406b25802a10950",
     "designs/003_analog2pdm/constraints/analog2pdm.sdc": "c6ffca417be33861d50496ca5713096b254f421a266a4d3a8f976bb227ddaecc",
     "designs/003_analog2pdm/model/generate_coefficients.py": "ebfa8d659945784de98a81a4e9e6ebdfd0e30ce76947d777e2afb6fbeae72cbb",
     "designs/003_analog2pdm/model/coefficients.json": "62b88fb92606e967a5305f8d69adad031e322f328d6ab7fe479185a35cce2be1",
@@ -61,8 +61,8 @@
     "common/rtl/audio_meter.sv": "fbf40c2577f6a6d23c75455d3625117898700c91830644d958f2eb5b448cd54f"
   },
   "hardware_connections": "User corrected header connections; both ports show LED activity",
-  "hardware_programming": "LED revision not programmed or observed on hardware; prior observations retained separately",
-  "hardware_result": "LED revision not programmed or observed on hardware; prior observations retained separately",
+  "hardware_programming": "SRAM PASS after DATA pin swap; exit 0 and Finished.; GW1NR-9C ID=0x1100481B USB=201745",
+  "hardware_result": "PASS user verified normal audio on both A/B after swapping DATA A=FPGA48 and DATA B=FPGA31, SRAM build 2026-11-16",
   "flash_programming": "not_performed",
   "independent_clock_hardware_test": "deferred; one MCHStreamer provides duplicated clocks",
   "audio_model": {
@@ -161,15 +161,15 @@
     "adc_data_min_ns": -10,
     "adc_data_max_ns": 50
   },
-  "pin_assignment_revision": "2026-11-14 corrected header numbering: J6-18 is 5V; CLK B at J6-20 / FPGA49; FPGA pin constraints unchanged",
+  "pin_assignment_revision": "2026-11-16 swapped DATA A/B only in 003: A=FPGA48/J6-19, B=FPGA31/J6-21; 004 unchanged",
   "pdm_header": {
     "clk_a": "J6-1 / FPGA 63",
     "clk_b": "J6-20 / FPGA 49",
-    "data_a": "J6-21 / FPGA 31",
-    "data_b": "J6-19 / FPGA 48"
+    "data_a": "J6-19 / FPGA 48",
+    "data_b": "J6-21 / FPGA 31"
   },
   "doctor_target": "GW1NR-9C ID=0x1100481B USB location 201745",
-  "header_numbering_correction": "J6-18 is 5V; DATA B/CLK B/DATA A are J6-19/20/21. User reports both ports started after wiring correction.",
+  "header_numbering_correction": "Physical header positions unchanged: J6-18=5V, J6-19=FPGA48, J6-20=FPGA49, J6-21=FPGA31. Current logical DATA assignments specified in pdm_header.",
   "user_observation_2026_11_14": {
     "leds": "four LEDs across A/B lit; exact LED numbers not separately stated",
     "analog_input": "PC music into ADC A, then same source moved to ADC B",
@@ -198,7 +198,27 @@
     "simulation": "PASS threshold, logarithmic mapping, signed minimum, decay, PWM duty, reset, invalid samples, fault blink override, existing audio regression",
     "build": "PASS setup=0 hold=0",
     "additional_dsp_blocks": 0,
-    "programming": "not performed",
+    "programming": "SRAM PASS 2026-11-16; audio observation pending",
     "release_frames_per_duty_step": 9
+  },
+  "sram_reload_2026_11_16": {
+    "result": "PASS",
+    "audio_result": "pending user observation",
+    "context": "Ordinary GPIO switching and all-four-channel internal test tones verified before restoring 003"
+  },
+  "data_swap_2026_11_16": {
+    "previous_bitstream_sha256": "31d99adf9675a2f24232fa1ada74d42c268a7d19c1cc46d65fb05d5def20331e",
+    "simulation": "PASS",
+    "build": "PASS setup=0 hold=0",
+    "pnr_pin_report": "PASS A=48/B=31",
+    "sram_programming": "PASS",
+    "audio_result": "PASS user verified normal audio on both A/B",
+    "flash_programming": "not performed"
+  },
+  "temporary_diagnostics_summary": {
+    "gpio": "User observed 0V/3.3V switching on both unloaded output pins",
+    "ddr": "External LED showed intermediate brightness; high-speed scope waveform not measured",
+    "internal_tones": "User confirmed test tones on ASIO inputs 1-4 at approximately -27dBFS RMS",
+    "cleanup": "One-off GPIO/DDR diagnostic source, generated outputs and individual records removed at user request"
   }
 }

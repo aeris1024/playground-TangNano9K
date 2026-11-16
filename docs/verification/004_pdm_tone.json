@@ -17,8 +17,8 @@
     "hold": 0
   },
   "bitstream": "build/004_pdm_tone/004_pdm_tone.fs",
-  "sram_programming": "LED revision not programmed or observed on hardware; prior observations retained separately",
-  "hardware_audio_observation": "LED revision not programmed or observed on hardware; prior observations retained separately",
+  "sram_programming": "PASS operation 2, exit 0 and Finished.; GW1NR-9C ID=0x1100481B USB=201745",
+  "hardware_audio_observation": "PASS after reload 2026-11-16: test tones received on all four channels, RMS approximately -27 dBFS, per user. Earlier frequency-response measurements retained.",
   "flash_programming": "not performed",
   "frequencies_hz": [
     100,
@@ -127,7 +127,13 @@
     "simulation": "PASS threshold, logarithmic mapping, signed minimum, decay, PWM duty, reset, invalid samples, fault blink override, existing audio regression",
     "build": "PASS setup=0 hold=0",
     "additional_dsp_blocks": 0,
-    "programming": "not performed",
+    "programming": "SRAM PASS 2026-11-16; hardware observation pending",
     "release_frames_per_duty_step": 9
+  },
+  "sram_reload_2026_11_16": {
+    "recorded_at": "2026-11-16T19:40:08.523774+09:00",
+    "result": "PASS",
+    "external_connections": "External LEDs removed; DATA A/B reconnected to MCHStreamer; ASIO 48kHz started, per user",
+    "audio_result": "PASS user confirmed test tones on ASIO inputs 1-4, approximately -27 dBFS RMS; screenshot at 1kHz shows all four RMS -27.0 dBFS and peaks -24.0 dBFS"
   }
 }

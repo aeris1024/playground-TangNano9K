@@ -61,7 +61,7 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 
 Analog2PDMの詳細は[デザイン説明](designs/003_analog2pdm/README.md)、
 実機接続は[配線・測定手順](docs/analog2pdm_wiring.md)を参照してください。
-PDM CLK Aは右側J6-1、残るDATA B／CLK B／DATA Aは隣接するJ6-19〜21です。
+PDM CLK Aは右側J6-1、残るDATA A／CLK B／DATA Bは隣接するJ6-19〜21です（003、2026-11-16以降）。
 ビルドはsetup/hold違反数も確認し、違反がある場合は失敗します。
 
 書き込みは`GW1NR-9C`、operation 2（SRAM Program）を使います。
@@ -212,7 +212,7 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 1. 開発基盤と`001_blink`（実装・シミュレーション・ビルド・SRAM書き込み・実機動作確認済み）
    内蔵Flashへの書き込みと、電源再投入後のFlashからの起動も実機確認済みです。
 2. `002_dual_pll`（2基同時の配置配線と非同期クロックの機能シミュレーション済み）
-3. `003_analog2pdm`（4chのRTL・数値検証・配置配線済み。ADC／MCHStreamerの配線・録音待ち）
+3. `003_analog2pdm`（4chのRTL・数値検証・配置配線済み。A/Bの音声疎通を実機確認済み。定量評価は別途）
 4. Analog2PDMの実機4ch評価、その後のFlash保存
 5. ボタン入力、UART、SPI、I2Cなどの周辺回路実験
 
@@ -227,3 +227,9 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 - 004_pdm_tone: 等振幅の内部テスト音でADC以前とPDM出力経路を切り分け。内部音の実測で大きな高域減衰は再現せず、迂回したPC／ADC／I2S経路を調査。20 kHzの残留減衰は未解決。
 
 003/004のLED3/6は音量に応じた1 kHz PWM表示と約48 msの減衰を行い、飽和・FIFO異常時には最大輝度の2 Hz点滅を優先します。
+
+### 003のDATA出力変更（2026-11-16）
+
+はんだ付け済みの配線に合わせ、DATA A=FPGA48 / J6-19、DATA B=FPGA31 / J6-21へ入れ替えました。
+変更後、ユーザーがA/Bともに正常な音声を確認しました。004のピン割り当ては従来のままです。
+今回限りのGPIO／DDR診断デザインは、確認完了後にソース・生成物・個別記録を削除しました。

@@ -44,12 +44,14 @@ MCHStreamerとはGNDを共通にし、MCHStreamer J3-2の3.3 V出力はTangの�
 
 ## MCHStreamer信号
 
+以下は2026-11-16以降の003専用です。004のDATA A/Bはこの表と逆です。
+
 | MCHStreamer J3 | Tang Nano 9K | 方向 |
 |---|---|---|
 | 11: PDM CLK | J6-1 / FPGA 63: PDM_CLK A | MCH→FPGA |
 | 12: PDM CLK2 | J6-20 / FPGA 49: PDM_CLK B | MCH→FPGA |
-| 3: PDM 1-2 | J6-21 / FPGA 31: PDM_DATA A | FPGA→MCH |
-| 4: PDM 3-4 | J6-19 / FPGA 48: PDM_DATA B | FPGA→MCH |
+| 3: PDM 1-2 | J6-19 / FPGA 48: PDM_DATA A | FPGA→MCH |
+| 4: PDM 3-4 | J6-21 / FPGA 31: PDM_DATA B | FPGA→MCH |
 | 1: GND | J6-23 / GND | 共通 |
 
 2026-11-13にPDMの4信号を右側ヘッダーJ6へ集約しました。
@@ -130,3 +132,13 @@ PCの音楽をADC Aへ入力してASIO上で音声らしい波形を確認し、
 SRAMで両系統の基本疎通を確認済みです。左右個別対応、定量的な音質、長時間安定性、Flash起動は別途確認します。
 
 PWM音量表示追加後は、LED3/6の明るさは音量を表す正常な表示です。異常は最大輝度の2 Hz点滅で表示します。
+
+## 現在のDATA配線（2026-11-16改訂・003のみ）
+
+003はDATA A=J6-19 / FPGA48、DATA B=J6-21 / FPGA31です。
+2026-11-14の端子番号訂正の節は当時の信号割り当てであり、現在の003には適用しません。
+ヘッダーの物理位置と5 V/GND/3.3 Vの位置は変更していません。
+004はDATA A=J6-21 / FPGA31、DATA B=J6-19 / FPGA48です。診断デザインと003を切り替えるとDATAのA/B対応が変わります。
+
+2026-11-16、DATA出力入れ替え後にユーザーがA/Bともに正常な音声を確認しました。
+Flashからの起動確認とは別の、SRAM動作の確認です。
