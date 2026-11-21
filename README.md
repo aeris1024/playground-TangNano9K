@@ -55,15 +55,9 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 |---|---|---|
 | `001_blink` | LED1の1 Hz点滅 | SRAM／Flashからの起動を実機確認済み |
 | `002_dual_pll` | 右側のピン63/49から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
-| `003_analog2pdm` | PCM1808×2→独立クロックのステレオPDM×2、合計4ch | 数値・RTL・配置配線検証済み、SRAMでA/B各系統の音楽信号を実機確認 |
-| `005_analog2pdm_1v8` | PDM側を1.8 Vへ変更した独立2系統・4ch版 | 同一回路の試作で両PLL LOCK・A/B音声を実機確認 |
-| `006_analog2pdm_select` | 起動時のスイッチ入力で1.8 V／3.3 VのPDM端子を選択 | 両電圧のA/B音声を実機確認。使用側だけにクロックを供給する運用 |
 
-`004_pdm_tone`はADC迂回の内部テスト音診断です。[測定手順](designs/004_pdm_tone/README.md)を参照してください。
+003〜009の開発と実機評価は、同階層の [Analog2PDM](../Analog2PDM/README.md) に移行しました。電源改良前の基準録音と測定条件は[移行先の実機評価記録](../Analog2PDM/measurements/2026-11-21/README.md)にあります。
 
-Analog2PDMの詳細は[デザイン説明](designs/003_analog2pdm/README.md)、
-実機接続は[配線・測定手順](docs/analog2pdm_wiring.md)を参照してください。
-PDM CLK Aは右側J6-1、残るDATA A／CLK B／DATA Bは隣接するJ6-19〜21です（003、2026-11-16以降）。
 ビルドはsetup/hold違反数も確認し、違反がある場合は失敗します。
 
 書き込みは`GW1NR-9C`、operation 2（SRAM Program）を使います。
@@ -214,41 +208,10 @@ Gitで管理する検証記録は`docs/verification/001_blink_flash.json`、
 1. 開発基盤と`001_blink`（実装・シミュレーション・ビルド・SRAM書き込み・実機動作確認済み）
    内蔵Flashへの書き込みと、電源再投入後のFlashからの起動も実機確認済みです。
 2. `002_dual_pll`（2基同時の配置配線と非同期クロックの機能シミュレーション済み）
-3. `003_analog2pdm`（4chのRTL・数値検証・配置配線済み。A/Bの音声疎通を実機確認済み。定量評価は別途）
-4. `005_analog2pdm_1v8`と`006_analog2pdm_select`（固定1.8 V版と起動時の電圧ポート選択版）
-5. Analog2PDMの実機4ch定量評価、006の停止復帰評価、その後のFlash保存
-6. ボタン入力、UART、SPI、I2Cなどの周辺回路実験
+3. ボタン入力、UART、SPI、I2Cなどの周辺回路実験
 
 ## 参考資料
 
 - [Sipeed Tang Nano 9K](https://wiki.sipeed.com/hardware/en/tang/Tang-Nano-9K/Nano-9K.html)
 - [公式LEDプロジェクト](https://github.com/sipeed/TangNano-9K-example/tree/main/led)
 - [公式回路図](https://dl.sipeed.com/fileList/TANG/Nano%209K/2_Schematic/Tang_Nano_9k_3672_Schematic.pdf)
-
-### 音質切り分けの進捗
-
-- 004_pdm_tone: 等振幅の内部テスト音でADC以前とPDM出力経路を切り分け。内部音の実測で大きな高域減衰は再現せず、迂回したPC／ADC／I2S経路を調査。20 kHzの残留減衰は未解決。
-
-003/004のLED3/6は音量に応じた1 kHz PWM表示と約48 msの減衰を行い、飽和・FIFO異常時には最大輝度の2 Hz点滅を優先します。
-
-### 003のDATA出力変更（2026-11-16）
-
-はんだ付け済みの配線に合わせ、DATA A=FPGA48 / J6-19、DATA B=FPGA31 / J6-21へ入れ替えました。
-変更後、ユーザーがA/Bともに正常な音声を確認しました。004のピン割り当ては従来のままです。
-今回限りのGPIO／DDR診断デザインは、確認完了後にソース・生成物・個別記録を削除しました。
-
-### 1.8 V版Analog2PDM
-
-`005_analog2pdm_1v8`を正式追加しました。PDM側はCLK A=J6-3、DATA A=J6-4、CLK B=J6-5、DATA B=J6-6です。
-ADC側は3.3 Vのままです。[配線と検証結果](designs/005_analog2pdm_1v8/README.md)を参照してください。
-同一回路の試作でLED1/2/4/5点灯とA/B両方の音声を実機確認済みです。Flash起動・定量音質評価は今後の確認項目です。
-3.3 V版003と診断用004は変更していません。
-
-### 電圧選択版Analog2PDM
-
-`006_analog2pdm_select`はMODE（J6-22）開放で3.3 V、GND接続で1.8 Vを起動時に選びます。
-1.8 V側はCLK A／DATA A／CLK B／DATA BをJ6-6〜9へまとめました。3.3 V側は003と同じです。
-電源OFFで配線・選択を変更します。内部プルアップを使うため外付け10 kΩは不要です。
-3.3 V側と1.8 V側でA/B音声を実機確認しました。使用する電圧側だけにクロックを供給してください。
-1.8 V使用中の未選択3.3 V側へのクロック同時供給では音切れがあり、同時供給時の安定性は未解決です。
-[配線と操作](designs/006_analog2pdm_select/README.md)と[検証記録](docs/verification/006_analog2pdm_select.json)を参照してください。
