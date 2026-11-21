@@ -56,7 +56,7 @@ $env:TANG_IVERILOG = 'C:\path\to\iverilog.exe'
 | `001_blink` | LED1の1 Hz点滅 | SRAM／Flashからの起動を実機確認済み |
 | `002_dual_pll` | 右側のピン63/49から2基の独立PLLでADCクロックを生成 | シミュレーション・配置配線済み、実機未確認 |
 
-003〜009の開発と実機評価は、同階層の [Analog2PDM](../Analog2PDM/README.md) に移行しました。電源改良前の基準録音と測定条件は[移行先の実機評価記録](../Analog2PDM/measurements/2026-11-21/README.md)にあります。
+003〜009の開発と実機評価は、[project_TangNano9K 配下の Analog2PDM](../project_TangNano9K/Analog2PDM/README.md) に移行しました。電源改良前の基準録音と測定条件は[移行先の実機評価記録](../project_TangNano9K/Analog2PDM/measurements/2026-11-21/README.md)にあります。
 
 ビルドはsetup/hold違反数も確認し、違反がある場合は失敗します。
 
